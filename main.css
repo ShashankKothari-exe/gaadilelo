@@ -5,7 +5,7 @@
     padding-right: 400px;
     border-bottom-style:groove;
     border-bottom-color: chocolate;
-    transform: translate(0,-60px);
+    transform: translate(0,-90px);
 }
 
 .InvisibleLink{
@@ -116,18 +116,29 @@ h1,h2{
     transform:translate(0px,60px);
 }
 
-.headercontents{
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+.headerscontents{
+    margin-left: 120px;
+    transform: translate(0,89px);
+}
+.headerscontents ul{
+    text-align: center;
+    display: inline-flex;
+    list-style: none;
+}
+
+.headerscontents ul li{
+     width: 120px;
+    margin: 15px;
+    padding: 15px;
+}
+
+.menuopt{
+      text-decoration: none;
+    color: white;
+}
+
+.active, .headerscontents ul li:hover{
+    background: #2bab0d;
+    border-radius: 100px;
     
-    display: flex;
-    justify-content: space-around;
-    line-height: 70px;
-    width: 880px;
-    padding: 0px;
-    margin: 0px;
-    transform: translate(-230px,70px);
 }
