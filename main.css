@@ -1,11 +1,15 @@
+.img{
+    background-image: url("images/pexels-hyundai-motor-group-11194510.jpg");
+}
 .header1{
     background-color: darkslategrey;
     padding: 0px;
     padding-left: 10px;
     padding-right: 400px;
+    height: 180px;
     border-bottom-style:groove;
     border-bottom-color: chocolate;
-    transform: translate(0,-90px);
+    transform: translate(0,-110px);
 }
 
 .InvisibleLink{
@@ -150,7 +154,7 @@ h1,h2{
 
 .active, .headerscontents ul li:hover{
     background: #008B8B;
-    border-radius: 100px;
+    border-radius: 10px;
     
 }
 
@@ -164,4 +168,10 @@ h1,h2{
     margin-top: 15px;
     margin-left: -15px;
     background: darkslategrey;
+    }
+
+.headerscontents ul div:hover .sub-menu-1 ul{
+    display: block;
+    padding: 2px;
+    margin: 2px;
 }
