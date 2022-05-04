@@ -14,11 +14,11 @@
     color: black;
 }
 
+
 .optionh1{
        color: brown;
        text-align: center;
-       margin-top: -5%;
-       transform: translate(0,180px);
+       margin-top: 100px;
 }
 
 h5{
@@ -28,6 +28,7 @@ h5{
 }
 
 h1,h2{
+    text-align: center;
     margin-block-end: 0px;
     margin-block-start: 0px;
 }
@@ -68,55 +69,42 @@ h1,h2{
 }
 
 .backimg{
-    margin-top: 0%;
+    margin-top: -108px;
     padding: 0px;
     background-size: cover;
     background-image: url("images/pexels-hyundai-motor-group-11194510.jpg");
-    height: 580px;
+    height: 800px;
     width: 100%;
 }
 
-.myhome{
-    margin-top: 0px;
-    margin-right: 0px;
-    background-size: cover;
-    background-image: url("images/png/white/001.png");
-    height: 20px;
-    width: 20px;
-   
-}
+
+.optionstabs ul{
+    list-style: none;
+    display:inline-flex;
 }
 
-.optionstabs{
-    padding-top: 35px;
-     height: 550px;
-    
+.optionstabs ul li{
+    text-align: center;
+    transform: translate(0,180px);
+    width: 350px;
+    height: 300px;
+    margin: 15px;
+    padding: 15px;
 }
 
 .buysection{
-    padding-bottom: 38%;
-    width: 30%;
-    margin-left: 2%;
     backdrop-filter: blur(15px);
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .rentsection{
-    padding-bottom: 38%;
-    width: 30%;
-    margin-left: 35%;
-    margin-top: -40.3%;
     backdrop-filter: blur(10px);
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .sellsection{
-    padding-bottom: 37%;
-    width: 30%;
-    margin-left: 68%;
-    margin-top: -40.5%;
     backdrop-filter: blur(15px);
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .reservations{
@@ -165,6 +153,7 @@ h1,h2{
     margin-top: 15px;
     margin-left: -15px;
     background: darkslategrey;
+    transform: translate(0,15px);
     }
 
 .headerscontents ul div:hover .sub-menu-1 ul{
