@@ -12,6 +12,7 @@
 .InvisibleLink{
     text-decoration-line: none;
     color: black;
+    cursor: pointer;
 }
 
 
@@ -135,6 +136,7 @@ h1,h2{
 .menuopt{
       text-decoration: none;
     color: white;
+    cursor:pointer;
 }
 
 .active, .headerscontents ul li:hover{
@@ -160,4 +162,23 @@ h1,h2{
     display: block;
     padding: 2px;
     margin: 2px;
+    margin-top: -10px;
+}
+
+.headerscontents ul div:hover .sub-menu-1 ul li{
+    background: none;
+    text-align: left;
+    width: 150px;
+    padding: 10px;
+    border-bottom: 1px groove #fff;
+    border-radius: 0;
+}
+
+.headerscontents ul div:hover .sub-menu-1 ul li:last-child{
+    border-bottom: none;
+}
+
+.sub-menu-1 ul li:hover{
+    color: #008b8b;
+    text-shadow: 0.08px 0.08px white;
 }
