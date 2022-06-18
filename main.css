@@ -83,7 +83,7 @@ h1,h2{
     text-align: center;
     transform: translate(0,140px);
     width: 350px;
-    height: 400px;
+    height: 375px;
     margin: 15px;
     padding: 15px;
 }
@@ -198,35 +198,38 @@ h1,h2{
 }
 
 .bikeimg{
-    align-items: center;
+    transform: translate(-4px,0px);
     padding: 0px;
     background-size: cover;
     height: 300px;
     width: 360px;
+    border-radius: 6%;
     background-size: cover;
     background-image:url("images/pexels-mansoor-980382.jpg");
 }
 .taximg{
-    align-items: center;
+    transform: translate(-4px,0px);
     padding: 0px;
     background-size: cover;
     height: 300px;
     width: 360px;
+    border-radius: 6%;
     background-size: cover;
     background-image:url("images/pexels-sangeet-rao-3037297.jpg");
 }
 
 .busimg{
-    align-items: center;
+    transform: translate(-4px,0px);
     padding: 0px;
     background-size: cover;
     height: 300px;
     width: 360px;
+    border-radius: 6%;
     background-size: cover;
     background-image:url("images/pexels-preston-zeller-15670.jpg");
 }
 
-.info{
+.li{
     display: block;
     padding: 2px;
     margin: 2px;
