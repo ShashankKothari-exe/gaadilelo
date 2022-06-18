@@ -34,7 +34,7 @@ h1,h2{
     text-rendering: auto;
     background-color: burlywood;
     text-align:center;
-    height:auto;
+    height:47px;
     width:165px;
     border-bottom-left-radius:40%;
     border-top-left-radius:60%;
@@ -88,6 +88,20 @@ h1,h2{
     padding: 15px;
 }
 
+.optionstabs2 ul{
+    list-style: none;
+    display:inline-flex;
+}
+
+.optionstabs2 ul li{
+    text-align: center;
+    transform: translate(0,-50px);
+    width: 350px;
+    height: 375px;
+    margin: 15px;
+    padding: 15px;
+}
+
 .bike{
     backdrop-filter: blur(15px);
     border-radius: 10%;
@@ -100,6 +114,11 @@ h1,h2{
 
 .bus{
     backdrop-filter: blur(15px);
+    border-radius: 10%;
+}
+
+.car{
+     background-color: black; 
     border-radius: 10%;
 }
 
@@ -197,6 +216,66 @@ h1,h2{
   }
 }
 
+.thar{
+    transform: translate(-4px,0px);
+    padding: 0px;
+    background-size: cover;
+    height: 300px;
+    width: 360px;
+    border-radius: 6%;
+    background-size: cover;
+    background-image:url("images/pexels-imad-clicks-9611952.jpg");
+}
+
+.thar:hover{
+    background-image:url("images/pexels-imad-clicks-8337436.jpg"); 
+}
+
+.scorpio{
+    transform: translate(-4px,0px);
+    padding: 0px;
+    background-size: cover;
+    height: 300px;
+    width: 360px;
+    border-radius: 6%;
+    background-size: cover;
+    background-image:url("images/mahindra-scorpio-9fed2d15-1024x768.jpg");
+}
+
+.scorpio:hover{
+    background-image:url("images/mahindra-scorpio-449f6e2f-1024x768.jpg"); 
+}
+
+.fortuner{
+    transform: translate(-4px,0px);
+    padding: 0px;
+    background-size: cover;
+    height: 300px;
+    width: 360px;
+    border-radius: 6%;
+    background-size: cover;
+    background-image:url("images/toyota-fortuner-33cf8491-1024x768.jfif");
+}
+
+.fortuner:hover{
+    background-image:url("images/toyota-fortuner-1be63d2b-1024x768.jfif"); 
+}
+
+.alto{
+    transform: translate(-4px,0px);
+    padding: 0px;
+    background-size: cover;
+    height: 300px;
+    width: 360px;
+    border-radius: 6%;
+    background-size: cover;
+    background-image:url("images/marutisuzuki-alto-800-a81a4685-1024x768.jpg");
+}
+
+.alto:hover{
+    background-image:url("images/marutisuzuki-alto-800-e159eb27-1024x768.png"); 
+}
+
 .bikeimg{
     transform: translate(-4px,0px);
     padding: 0px;
@@ -235,4 +314,26 @@ h1,h2{
     margin: 2px;
     margin-top: -10px;
     height: 20px;
+}
+
+
+
+.carh3 {
+    transform: translate(-80px,0px);
+    margin-top: 0px;
+    margin-bottom: 0px;
+ 
+    text-transform: uppercase;
+    width: 500px;
+ text-align: center;
+    color: #b9dfff;
+    color: #fff;
+    font-family: "Zefani";
+ font-family: 'Abril Fatface';
+    text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228dff,0 0 35px #228dff,0 0 40px #228dff;
+}
+
+.leftpush{
+    transform: translate(1350px,-187px);
+    
 }
