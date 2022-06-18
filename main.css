@@ -225,3 +225,11 @@ h1,h2{
     background-size: cover;
     background-image:url("images/pexels-preston-zeller-15670.jpg");
 }
+
+.info{
+    display: block;
+    padding: 2px;
+    margin: 2px;
+    margin-top: -10px;
+    height: 20px;
+}
