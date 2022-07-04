@@ -5,16 +5,17 @@
         <meta charset="utf-8">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+         <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="main.css">
     </head>
-    <body style="margin: 0px;">
+    <body style="margin: 0px; background-image: url(images/codepen-yVEOpY.png)">
         <div class= "header1">
             <div class="headerscontents">
             <ul style="transform: translate(20px,0px);">
                 
                 
-                    <a class="menuopt">
-                        <li class="active">
+                    <a class="menuopt" href="index.html">
+                        <li>
                        Home
                         </li>
                     </a>
@@ -61,7 +62,7 @@
                 </div>
             
                     <a class="menuopt" href="login.html">
-                        <li>
+                        <li class="active">
                             <b><u>Login/Sign up</u></b>
                         </li>
                 </a>
@@ -82,7 +83,45 @@
             </div>
             </div>
         </div>
-        
+         <br><br><br>
+
+<!-- Form View -->
+    <h1 class="glow" style="font-size: 50px;">Create an account</h1>
+      <hr>
+      <div class="formsview">
+      <form id="signup-form"> 
+          <label for="name">Username:</label>
+      <input id="signup-username" name="name" type="text" required placeholder="e.g SinceJohnnyxd"><hr>
+          <label for="pass">Password:</label>
+      <input id="signup-password" name="pass" type="password" required placeholder="Atleast 6 characters"><hr>
+             <label for="cpass">Confirm Password:</label>
+      <input id="signup-password" name="cpass" type="password" required placeholder="Same as before"><hr>
+      <input type="submit" value="Create an account">
+    </form>
+      </div>
+    <div id="signup-error"></div>
+         
+  <!-- application code -->
+  <script type="text/javascript">
+    userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+
+     function handleSignUp(e) {
+    e.preventDefault()
+    if(document.getElementsByName('cpass')==document.getElementsByName('pass')){
+    const username = document.getElementById('signup-username').value
+    const password = document.getElementById('signup-password').value
+
+    userbase.signUp({ username, password, rememberMe: 'none' })
+      .then((user) => alert('You signed up!'))
+      .catch((e) => document.getElementById('signup-error').innerHTML = e)
+    }
+         else{
+             document.getElementById('signup-error').innerHTML = "Passwords didn't match"
+         }
+  }
+
+  document.getElementById('signup-form').addEventListener('submit', handleSignUp)
+  </script>
            
     </body>
 </html>
