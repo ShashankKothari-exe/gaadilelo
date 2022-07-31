@@ -90,22 +90,21 @@
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <!-- Auth View -->
-  <div id="auth-view">
-  <h1 class="glow" style="font-size: 50px;">Login to your account</h1><hr>
-        <div class="formsview">
-    <form id="login-form">
-        <label for="name">Username:</label>
-      <input id="login-username" type="text" required placeholder="Username"><hr>
+   <!-- Form View -->
+    <h1 class="glow" style="font-size: 50px;">Create an account</h1>
+      <hr>
+      <div class="formsview">
+      <form id="signup-form"> 
+          <label for="name">Username:</label>
+      <input id="signup-username" name="name" type="text" required placeholder="e.g SinceJohnnyxd"><hr>
           <label for="pass">Password:</label>
-      <input id="login-password" type="password" required placeholder="Password"><hr>
-        <label for="Remember">Remember Me:</label>
-        <input type="checkbox" id="rememberme" onclick="flagpush()"><hr>
-      <input type="submit" value="Sign in">
+      <input id="signup-password" name="pass" type="password" required placeholder="Atleast 6 characters"><hr>
+             <label for="cpass">Confirm Password:</label>
+      <input id="signup-password2" name="cpass" type="password" required placeholder="Same as before"><hr>
+      <input type="submit" value="Create an account">
     </form>
-    <div id="login-error"></div>
-        </div>
-        </div>
+          <div id="signup-error"></div>
+      </div>
         <div id="todo-view">
             <div class="formsview">
   <h1><div id="username"></div> Bookings</h1>
@@ -119,15 +118,22 @@
 <script type="text/javascript">
     let a=0;
   userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
-  function handleLogin(e) {
+    function handleSignUp(e) {
     e.preventDefault()
-      userbase.signOut()
-      document.getElementById('login-error').innerHTML="Loading..."
-    const username = document.getElementById('login-username').value
-    const password = document.getElementById('login-password').value
-       userbase.signIn({ username, password, rememberMe: 'none' })
+      
+    const username = document.getElementById('signup-username').value
+    const password = document.getElementById('signup-password').value
+    const password2 = document.getElementById('signup-password2').value
+    
+    if(password==password2){
+    userbase.signUp({ username, password, rememberMe: 'none' })
+      .then((user) => alert('You signed up!'))
       .then((user) => showTodos(user.username))
-      .catch((e) => document.getElementById('login-error').innerHTML = e)
+       .catch((e) => document.getElementById('signup-error').innerHTML= e)
+  }
+  else{
+      document.getElementById('signup-error').innerHTML = "Passwords didn't match"
+  }
   }
 
      function showTodos(username) {
@@ -176,3 +182,4 @@
            
     </body>
 </html>
+    

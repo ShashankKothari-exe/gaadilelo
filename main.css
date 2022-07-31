@@ -1,16 +1,45 @@
 html {
   scroll-behavior: smooth;
+    scrollbar-width:normal;
+    scrollbar-color:#db1d5c #dddddd;
 }
 .header1{
     background-color: darkslategrey;
     padding: 0px;
-    padding-left: 10px;
-    padding-right: 400px;
-    height: 180px;
     border-bottom-style:groove;
     border-bottom-color: chocolate;
-    transform: translate(0,-110px);
     background-size: contain;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    position: fixed;
+    z-index: 10;
+    top:0rem;
+    left:0rem;
+}
+
+.backtotop{
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    border-radius: 50%;
+    bottom:2rem;
+    right:2rem;
+    cursor:pointer;
+    z-index: 10;
+    background-color:crimson;
+    opacity: 0.2;
+}
+
+.backtotop:hover{
+    background-color: firebrick;
+    opacity: inherit;
+}
+
+body{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 .InvisibleLink{
@@ -48,7 +77,7 @@ p{
     border-top-left-radius:60%;
     border-bottom-right-radius:50%;
     margin-right:0px;
-    transform: translate(0,10px);
+    transform: translate(0,-100px);
 }
 
 .wheel1{
@@ -73,9 +102,8 @@ p{
 }
 
 .backimg{
-    margin-top: -110px;
+    margin-top: 86px;
     padding: 0px;
-    background-size: cover;
     background-image: url("images/pexels-hyundai-motor-group-11194510.jpg");
     background-size:contain;
     height: 800px;
@@ -87,11 +115,12 @@ p{
 }
 
 .optionstabs{
-    width: 100%;
-    margin: auto;
     display: flex;
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 25px;
     justify-content:space-around;
-    
 }
 
 .tab{
@@ -107,7 +136,7 @@ p{
     padding: 6px;
     width: 375px;
     height: 375px;
-     background-color: black; 
+    background-color: black; 
     border-radius: 10%;
 }
 .tabimg{
@@ -115,6 +144,7 @@ p{
     width: 100%;
     margin-top: -4px;
     border-radius: 6%;
+    position: relative;
     background-size: cover;
 }
 
@@ -128,16 +158,16 @@ p{
 }
 
 .headerscontents{
-    margin-left: 120px;
-    transform: translate(0,89px);
-}
-.headerscontents ul{
+    padding: 0px;
+    display:flex;
+    width: 100%;
+    margin: auto;
+    justify-content:space-around;
     text-align: center;
-    display: inline-flex;
     list-style: none;
 }
 
-.headerscontents ul li{
+.headerscontents li{
      width: 120px;
     margin: 15px;
     padding: 15px;
@@ -150,7 +180,7 @@ p{
     background-size: contain;
 }
 
-.active, .headerscontents ul li:hover{
+.active, .headerscontents li:hover{
     background: #008B8B;
     border-radius: 10px;
     
@@ -160,25 +190,27 @@ p{
     display: none;
 }
 
-.headerscontents ul div:hover .sub-menu-1{
-    display: block;
-    position: absolute;
-    margin-top: 15px;
+.headerscontents div:hover .sub-menu-1{
+    opacity: 0.84;
+    display:flex;
+    position:absolute;
+    margin-top: 37px;
     margin-left: -15px;
     background: darkslategrey;
-    transform: translate(0,15px);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    align-content: flex-start;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     }
 
-.headerscontents ul div:hover .sub-menu-1 ul{
+.headerscontents div:hover .sub-menu-1 ul{
+    list-style: none;
     display: block;
     padding: 2px;
     margin: 2px;
     margin-top: -10px;
 }
 
-.headerscontents ul div:hover .sub-menu-1 ul li{
+.headerscontents div:hover .sub-menu-1 ul li{
     background: none;
     text-align: left;
     width: 150px;
@@ -187,11 +219,11 @@ p{
     border-radius: 0;
 }
 
-.headerscontents ul div:hover .sub-menu-1 ul li:last-child{
+.headerscontents div:hover .sub-menu-1 ul li:last-child{
     border-bottom: none;
 }
 
-.sub-menu-1 ul li:hover{
+.sub-menu-1 li:hover{
     color: #008b8b;
     text-shadow: 0.08px 0.08px white;
 }
@@ -439,47 +471,26 @@ p{
 
 
 .carh3 {
-    transform: translate(-80px,0px);
     margin-top: 0px;
     margin-bottom: 0px;
-    font-size: 40px;
     text-transform: uppercase;
-    width: 500px;
- text-align: center;
+    text-align: center;
     color: #b9dfff;
     color: #fff;
     font-family: "Zefani";
- font-family: 'Abril Fatface';
-    text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228dff,0 0 35px #228dff,0 0 40px #228dff;
+    font-family: 'Abril Fatface';
+    text-shadow: 0 0 2.5px #fff,0 0 5px #fff,0 0 7.5px #fff,0 0 100px #228dff,0 0 17.5px #228dff,0 0 20px #228dff;
 }
 
-.sanitisedimg{
-    padding: 0px;
-    background-size: cover;
-    height: 300px;
-    width: 360px;
-    border-radius: 6%;
-    background-size: cover;
+#sanitisedimg{
     background-image:url("images/san.png");
 }
 
-.maintainedimg{
-    padding: 0px;
-    background-size: cover;
-    height: 300px;
-    width: 360px;
-    border-radius: 6%;
-    background-size: cover;
+#maintainedimg{
     background-image:url("images/ma.png");
 }
 
-.insuredimg{
-    padding: 0px;
-    background-size: cover;
-    height: 300px;
-    width: 360px;
-    border-radius: 6%;
-    background-size: cover;
+#insuredimg{
     background-image:url("images/ins.png");
 }
 
@@ -494,4 +505,20 @@ p{
     background-size: contain;
     backdrop-filter: blur(15px);
     border-radius: 10%;
+}
+
+::-webkit-scrollbar{
+    width:1.5vw;
+}
+
+::-webkit-scrollbar-track{
+    background: #dddddd;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #008B79;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: #008B8B;
 }
