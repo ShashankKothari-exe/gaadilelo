@@ -1,4 +1,3 @@
- <body style="margin: 0px; background-image: url(images/codepen-yVEOpY.png)">
 <!DOCTYPE html>
 <html>
     
@@ -10,18 +9,8 @@
         <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="main.css">
     </head>
-    
-        <!DOCTYPE html>
-<html>
-    
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BookMyRide | Buy, sell and rent cars.</title>
-        <meta name="description" content="Buy,sell and rent cars.">
-        <link rel="stylesheet" href="../main.css">
-    </head>
-    <body style="margin: 0px; background-image: url(../images/cactback.jfif)">
+
+    <body id="logimg" style="margin: 0px; background-image: url(images/cartoon-snail-loading-loading.gif">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -59,6 +48,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -70,7 +62,7 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt">
+                    <div class="menuopt">
                         <li class="active">
                             <b><u>Login/Sign up</u></b>
                             <div class="sub-menu-1">
@@ -81,15 +73,17 @@
                                     <a class="menuopt" href="signup.html">
                                     <li>SIGNUP</li>
                                     </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
                                 </ul> 
                         </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br>
-
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>   
     <!-- Auth View -->
   <div id="auth-view">
   <h1 class="glow" style="font-size: 50px;">Login to your account</h1><hr>
@@ -109,7 +103,9 @@
         <div id="todo-view">
             <div class="formsview">
   <h1><div id="username"></div> Bookings</h1>
+  <hr>
   <div id="todos"></div>
+  <input type="button" id="upload" value="Upload Bookings">
   <div id="db-loading">Loading Bookings...</div>
   <div id="db-error"></div>
 </div>
@@ -117,37 +113,51 @@
          
   <!-- application code -->
 <script type="text/javascript">
-    let a=0;
+    let globalitems
+    let admin='admin'
+    let mydatabase
   userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+    .then((session) => session.user ? showTodos(session.user.username) : showAuth())
+    .catch(() => showAuth())
+    .finally(() => document.getElementById('logimg').style.backgroundImage="url('images/codepen-yVEOpY.png')")
+
   function handleLogin(e) {
     e.preventDefault()
-      userbase.signOut()
       document.getElementById('login-error').innerHTML="Loading..."
     const username = document.getElementById('login-username').value
     const password = document.getElementById('login-password').value
-       userbase.signIn({ username, password, rememberMe: 'none' })
+       userbase.signIn({ username, password, rememberMe: 'local' })
       .then((user) => showTodos(user.username))
       .catch((e) => document.getElementById('login-error').innerHTML = e)
   }
 
+    function showAuth() {
+    document.getElementById('todo-view').style.display = 'none'
+    document.getElementById('auth-view').style.display = 'block'
+    document.getElementById('login-username').value = ''
+    document.getElementById('login-password').value = ''
+    document.getElementById('login-error').innerText = ''
+  }
+    
      function showTodos(username) {
     document.getElementById('auth-view').style.display = 'none'
     document.getElementById('todo-view').style.display = 'block'
     document.getElementById('username').innerHTML = username + "'s"
     document.getElementById('todos').innerText = ''
-  document.getElementById('db-loading').style.display = 'block'
-  document.getElementById('db-error').innerText = ''
-
-  userbase.openDatabase({ databaseName: 'todos', changeHandler })
+    document.getElementById('db-loading').style.display = 'block'
+    document.getElementById('db-error').innerText = ''
+    mydatabase=username + "+todos"
+    setCookie("mydata",mydatabase,30);
+    userbase.openDatabase({ databaseName: 'todos', changeHandler })
     .catch((e) => document.getElementById('db-error').innerText = e)
   }
     
     function changeHandler(items) {
-  document.getElementById('db-loading').style.display = 'none'
-  const todosList = document.getElementById('todos')
-  
+    document.getElementById('db-loading').style.display = 'none'
+    const todosList = document.getElementById('todos')
+    globalitems=items;
 
-  if (items.length === 0) {
+    if (items.length === 0) {
     todosList.innerText = 'Empty'
   } 
         else {
@@ -169,8 +179,42 @@
     }
   }
 }
+    function logout(){
+       userbase.signOut() 
+       alert("Signed out")
+       showAuth()
+       document.getElementById('auth-view').style.display = 'block'
+
+    }
+    
+    function upload(e){
+        e.preventDefault
+    userbase.shareDatabase({
+  databaseName: 'todos'
+})
+    .then((shareToken) => {
+  alert('Data uploaded.')
+})
+        .catch((e) => console.error(e)) 
+    }
+    
+    
+    function setCookie(name, value, daysToLive) {
+    // Encode value in order to escape semicolons, commas, and whitespace
+    var cookie = name + "=" + encodeURIComponent(value);
+    
+    if(typeof daysToLive === 60) {
+        /* Sets the max-age attribute so that the cookie expires
+        after the specified number of days */
+        cookie += "; max-age=" + (daysToLive*24*60*60);
+        
+        document.cookie = cookie;
+    }
+}
     
   document.getElementById('todo-view').style.display = 'none'
+  document.getElementById('auth-view').style.display = 'none'
+  document.getElementById('upload').addEventListener('click', upload)
   document.getElementById('login-form').addEventListener('submit', handleLogin)
 </script>
            

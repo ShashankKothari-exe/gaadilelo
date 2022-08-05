@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+        <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="../main.css">
     </head>
     
@@ -19,7 +20,7 @@
         <meta name="description" content="Buy,sell and rent cars.">
         <link rel="stylesheet" href="../main.css">
     </head>
-    <body style="margin: 0px; background-image: url(../images/cactback.jfif)">
+    <body id="emergimg" style="margin: 0px; background-image: url(../images/cartoon-snail-loading-loading.gif)">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -57,6 +58,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="../login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="../bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -68,15 +72,29 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="../login.html">
+                    <div class="menuopt" href="../login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   <a class="menuopt"  href="../login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="../signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="content">
             <div>
                 <ul style="list-style: none;
     display:inline-flex;">
@@ -88,9 +106,56 @@
     padding: 15px;">
                     <h3 class="carh3" style="font-size: 50px;">Ambulance</h3>
                        <hr>
-                       <div class=ambimg></div>
+                       <div class=ambimg onclick="Ambulancebook()"></div>
                     </li>
                 </ul>
         </div>
+        </div>
+             <script type="text/javascript">
+               let globalitems
+               let tobook
+               let isloged=1
+              document.getElementById('content').style.display= 'none'
+              userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+              .then((session) => session.user ? userbase.openDatabase({ databaseName: 'todos' , changeHandler }) : notlogin())
+              .catch((e) => alert('ERROR: '+e))              
+            function logout(){
+       userbase.signOut()  
+        alert("Signed out")
+    }
+        function book(tobook){
+            if(isloged===0){
+                alert('Please Login First.')
+            return
+            }
+            for (let i=0; i < globalitems.length; ++i){
+                if(tobook===globalitems[i].item.todo){
+                    alert(tobook+ ' is already booked')
+                    return
+                }
+            }
+            userbase.insertItem({ databaseName: 'todos', item: { 'todo': tobook }})
+    alert(tobook + ' Booked!')
+     }
+                  
+                  function changeHandler(items){
+                      globalitems=items;
+                      document.getElementById('emergimg').style.backgroundImage="url('../images/cactback.jfif')"
+                      document.getElementById('content').style.display= 'block'
+                  }
+                  
+                  function notlogin(){
+                      isloged=0;
+                      document.getElementById('emergimg').style.backgroundImage="url('../images/cactback.jfif')"
+                      document.getElementById('content').style.display= 'block'
+        }          
+    
+                  function Ambulancebook(){
+    tobook = "Ambulance"
+        book(tobook)
+                  }
+                  
+                  
+        </script>
     </body>
 </html>

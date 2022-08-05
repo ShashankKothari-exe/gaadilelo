@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+        <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="../main.css">
     </head>
     
@@ -18,7 +19,7 @@
         <meta name="description" content="Buy,sell and rent cars.">
         <link rel="stylesheet" href="../main.css">
     </head>
-    <body style="margin: 0px; background-image: url(../images/istockphoto-1212342896-612x612.jpg) ">
+    <body id="scooterimg" style="margin: 0px; background-image: url(../images/cartoon-snail-loading-loading.gif) ">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -56,6 +57,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="../login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="../bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -67,21 +71,35 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="../login.html">
+                    <div class="menuopt" href="../login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   <a class="menuopt"  href="../login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="../signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="content">
         <div class="horiopt">
             <div class="optionstabs">
                    <div class="car">
                     <h3 class="carh3">Ntorq</h3>
                        <hr>
-                       <div class="tabimg" id="ntorq"></div>
+                       <div class="tabimg" id="ntorq" onclick="Ntorqbook()"></div>
                        <p><b><br>Model: Ntorq 125
                        <br>Brand: TVS
                        <br>Driven: 31.2K km
@@ -96,7 +114,7 @@
                     <div class="car">
                     <h3 class="carh3">Duet</h3>
                         <hr>
-                        <div class="tabimg" id="duet">
+                        <div class="tabimg" id="duet" onclick="Duetbook()">
                         </div>
                         <p><b>
                              <br>Model: Duet<br>
@@ -116,7 +134,7 @@
                     <div class="car">
                     <h3 class="carh3">Maestro</h3>
                         <hr>
-                        <div class="tabimg" id="maestro"></div>
+                        <div class="tabimg" id="maestro" onclick="Maestrobook()"></div>
                         <p><b>
                             <br>
                              Model: Maestro Edge<br>
@@ -136,7 +154,7 @@
                    <div class="car">
                     <h3 class="carh3">Fasino</h3>
                        <hr>
-                       <div class="tabimg" id=fasino></div>
+                       <div class="tabimg" id="fasino" onclick="Fasinobook()"></div>
                        <p><b><br>Model: Fasino standard
                        <br>Brand: Yamaha
                        <br>Driven: 48.2K km
@@ -151,7 +169,7 @@
                     <div class="car">
                     <h3 class="carh3">Activa</h3>
                         <hr>
-                        <div class="tabimg" id="activa">
+                        <div class="tabimg" id="activa" onclick="Activabook()">
                         </div>
                         <p><b>
                              <br>Model: Activa 5G<br>
@@ -171,7 +189,7 @@
                     <div class="car">
                     <h3 class="carh3">Vespa</h3>
                         <hr>
-                        <div class="tabimg" id="vespa"></div>
+                        <div class="tabimg" id="vespa" onclick="Vespabook()"></div>
                         <p><b>
                             <p><br>
                              Model: LX 125 BS6<br>
@@ -192,6 +210,78 @@
     margin: 15px;
     padding: 15px;
 }"></div>
+        </div>
         <br><br><br><br><br><br><br><br><br><br><hr><br>
+                           <script type="text/javascript">
+               let globalitems
+               let tobook
+               let isloged=1
+               let isbooked=0
+              document.getElementById('content').style.display= 'none'
+              userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+              .then((session) => session.user ? userbase.openDatabase({ databaseName: 'todos' , changeHandler }) : notlogin())
+              .catch((e) => alert('ERROR: '+e))              
+            function logout(){
+       userbase.signOut()  
+        alert("Signed out")
+    }
+        function book(tobook){
+            if(isloged===0){
+                alert('Please Login First.')
+            return
+            }
+            for (let i=0; i < globalitems.length; ++i){
+                if(tobook===globalitems[i].item.todo){
+                    alert(tobook+ ' is already booked')
+                    return
+                }
+            }
+            userbase.insertItem({ databaseName: 'todos', item: { 'todo': tobook }})
+    alert(tobook + ' Booked!')
+     }
+                  
+                  function changeHandler(items){
+                      globalitems=items;
+                      document.getElementById('scooterimg').style.backgroundImage="url('../images/istockphoto-1212342896-612x612.jpg')"
+                      document.getElementById('content').style.display= 'block'
+                  }
+                  
+                  function notlogin(){
+                      isloged=0;
+                      document.getElementById('scooterimg').style.backgroundImage="url('../images/istockphoto-1212342896-612x612.jpg')"
+                      document.getElementById('content').style.display= 'block'
+        }          
+    
+                  function Ntorqbook(){
+    tobook = "Ntorq"
+        book(tobook)
+                  }
+                  
+                  function Duetbook(){
+    tobook = "Hero Duet"
+        book(tobook)
+                  }
+                  
+                  function Maestrobook(){
+    tobook = "Hero Maestro"
+        book(tobook)
+                  }
+                  
+                  function Fasinobook(){
+    tobook = "Yamaha Fasino"
+        book(tobook)
+                  }
+                  
+                  function Activabook(){
+    tobook = "Honda Activa"
+        book(tobooko)
+                  }
+                  
+                  function Vespa(){
+    tobook = "Vespa"
+        book(tobook)
+                  }
+                  
+        </script>
     </body>
 </html>

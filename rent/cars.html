@@ -6,9 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+        <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="../main.css">
     </head>
-    <body style="margin: 0px; background-image: url(../images/backgroundcars.jpg)">
+    <body id="carimg" style="margin: 0px; background-image: url(../images/cartoon-snail-loading-loading.gif)">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -46,6 +47,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="../login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="../bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -57,27 +61,43 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="../login.html">
+                    <div class="menuopt" href="../login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   
+                                   <a class="menuopt"  href="../login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="../signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="content">
             <div class="optionstabs">
                    <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Thar</h3>
                        <hr>
-                       <div class=tabimg id="thar"></div>
+                       <div class=tabimg id="thar" onclick="Tharbook()"></div>
+                       
                  
                     </div>
         
                     <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Scorpio</h3>
                         <hr>
-                        <div class="tabimg" id="scorpio">
+                        <div class="tabimg" id="scorpio" onclick="Scorpiobook()">
                         </div>
         
                     </div>
@@ -87,7 +107,7 @@
                     <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Nexon</h3>
                         <hr>
-                       <div class="tabimg" id="nexon"></div>
+                       <div class="tabimg" id="nexon" onclick="Nexonbook()"></div>
            
                     </div>
                    
@@ -98,21 +118,21 @@
                 <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Brezza</h3>
                         <hr>
-                        <div class="tabimg" id="breeza"></div>
+                        <div class="tabimg" id="breeza" onclick="Breezabook()"></div>
                     
                 </div>
                 
                     <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Fortuner</h3>
                         <hr>
-                        <div class="tabimg" id="fortuner"></div>
+                        <div class="tabimg" id="fortuner" onclick="Fortunerbook()"></div>
                   
                 </div>
                     
                       <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Alto</h3>
                         <hr>
-                        <div class="tabimg" id="alto"></div>
+                        <div class="tabimg" id="alto" onclick="Altobook()"></div>
 
                 </div>
                     
@@ -125,23 +145,124 @@
                  <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Swift</h3>
                         <hr>
-                       <div class="tabimg" id="swift"></div>
+                       <div class="tabimg" id="swift" onclick="Swiftbook()"></div>
                 </div>
                 
                 <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Nano</h3>
                         <hr>
-                        <div class="tabimg" id="nano"></div>
+                        <div class="tabimg" id="nano" onclick="Nanobook()"></div>
                         
                 </div>
                 
                     <div class="car">
                     <h3 class="carh3" style="font-size: 50px;">Wagon R</h3>
                         <hr>
-                        <div class="tabimg" id="wagonr"></div>
+                        <div class="tabimg" id="wagonr" onclick="Wagonrbook()"></div>
             </div>
            
             </div>
+        </div>
          <br><br><br><br><br><br><br><br><br><br><hr><br>
+            <script type="text/javascript">
+               let globalitems
+               let tobook
+               let usr= getCookie("usrname")
+               let pss= getCookie("passwd")
+               let admin="admin"
+               let qwerty="qwerty"
+               let isloged=1
+               let isbooked=0
+              document.getElementById('content').style.display= 'none'
+              userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+              .then((session) => session.user ? userbase.openDatabase({ databaseName: 'todos' , changeHandler }) : notlogin())
+              .catch((e) => alert('ERROR: '+e))              
+            function logout(){
+       userbase.signOut()  
+        alert("Signed out")
+    }
+                
+        function book(tobook){
+            if(isloged===0){
+                alert('Please Login First.')
+            return
+            }
+            for (let i=0; i < globalitems.length; ++i){
+                if(tobook===globalitems[i].item.todo){
+                    alert(tobook+ ' is already booked')
+                    return
+                }
+            }
+            
+                userbase.insertItem({ databaseName: 'todos', item: { 'todo': tobook }})
+                alert(tobook + ' Booked!')
+     }
+        
+                  
+                  function changeHandler(items){
+                      globalitems=items;
+                      document.getElementById('carimg').style.backgroundImage="url('../images/backgroundcars.jpg')"
+                      document.getElementById('content').style.display= 'block'
+                  }
+                  
+                  function notlogin(){
+                      isloged=0;
+                      document.getElementById('carimg').style.backgroundImage="url('../images/backgroundcars.jpg')"
+                      document.getElementById('content').style.display= 'block'
+        }          
+    
+                  function Tharbook(){
+    tobook = "Thar"
+        book(tobook)
+                  }
+                  
+                  function Scorpiobook(){
+    tobook = "Scorpio"
+        book(tobook)
+                  }
+                  
+                  function Nexonbook(){
+    tobook = "Nexon"
+        book(tobook)
+                  }
+                  
+                  function Breezabook(){
+    tobook = "Breeza"
+        book(tobook)
+                  }
+                  
+                  function Fortunerbook(){
+    tobook = "Fortuner"
+        book(tobook)
+                  }
+                  
+                  function Altobook(){
+    tobook = "Alto"
+        book(tobook)
+                  }
+                  
+                  function Swiftbook(){
+    tobook = "Swift"
+        book(tobook)
+                  }
+                  
+                  function Nanobook(){
+    tobook = "Nano"
+        book(tobook)
+                  }
+                  
+                  function Wagonrbook(){
+    tobook = "Wagonr"
+        book(tobook)
+                  }
+                
+                  function getCookie(name){
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+  }
+
+                  
+        </script>
     </body>
 </html>

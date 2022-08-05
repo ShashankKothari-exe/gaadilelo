@@ -9,8 +9,8 @@
         <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="main.css">
     </head>
-    
-    <body style="margin: 0px; background-image: url(images/codepen-yVEOpY.png)">
+
+    <body id="logimg" style="margin: 0px; background-image: url(images/cartoon-snail-loading-loading.gif">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -83,29 +83,29 @@
                 
             </div>
             </div>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-   <!-- Form View -->
-   <div id="auth-view">
-    <h1 class="glow" style="font-size: 50px;">Create an account</h1>
-      <hr>
-      <div class="formsview">
-      <form id="signup-form"> 
-          <label for="name">Username:</label>
-      <input id="signup-username" name="name" type="text" required placeholder="e.g SinceJohnnyxd"><hr>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>   
+    <!-- Auth View -->
+  <div id="auth-view">
+  <h1 class="glow" style="font-size: 50px;">Login to your account</h1><hr>
+        <div class="formsview">
+    <form id="login-form">
+        <label for="name">Username:</label>
+      <input id="login-username" type="text" required placeholder="Username"><hr>
           <label for="pass">Password:</label>
-      <input id="signup-password" name="pass" type="password" required placeholder="Atleast 6 characters"><hr>
-             <label for="cpass">Confirm Password:</label>
-      <input id="signup-password2" name="cpass" type="password" required placeholder="Same as before"><hr>
-      <input type="submit" value="Create an account">
+      <input id="login-password" type="password" required placeholder="Password"><hr>
+        <label for="Remember">Remember Me:</label>
+        <input type="checkbox" id="rememberme" onclick="flagpush()"><hr>
+      <input type="submit" value="Sign in">
     </form>
-          <div id="signup-error"></div>
-      </div>
-      </div>
+    <div id="login-error"></div>
+        </div>
+        </div>
         <div id="todo-view">
             <div class="formsview">
-  <h1><div id="show-username"></div> Bookings</h1>
+  <h1><div id="username"></div> Bookings</h1>
+  <hr>
   <div id="todos"></div>
+  <input type="button" id="upload" value="Upload Bookings">
   <div id="db-loading">Loading Bookings...</div>
   <div id="db-error"></div>
 </div>
@@ -113,41 +113,50 @@
          
   <!-- application code -->
 <script type="text/javascript">
-    let a=0;
+    let globalitems
+    let admin='admin'
+    let qwerty='qwerty'
   userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
-    function handleSignUp(e) {
+    .then((session) => session.user ? showTodos(session.user.username) : showAuth())
+    .catch(() => showAuth())
+    .finally(() => document.getElementById('logimg').style.backgroundImage="url('images/codepen-yVEOpY.png')")
+
+  function handleLogin(e) {
     e.preventDefault()
-    document.getElementById('signup-error').innerHTML="Loading..."  
-    const username = document.getElementById('signup-username').value
-    const password = document.getElementById('signup-password').value
-    const password2 = document.getElementById('signup-password2').value
-    
-    if(password===password2){
-    userbase.signUp({ username, password, rememberMe: 'none' })
+      document.getElementById('login-error').innerHTML="Loading..."
+    const username = document.getElementById('login-username').value
+    const password = document.getElementById('login-password').value
+    setCookie("usrname",username);
+    setCookie("passwd",password);
+       userbase.signIn({ username, password, rememberMe: 'local' })
       .then((user) => showTodos(user.username))
-       .catch((e) => document.getElementById('signup-error').innerHTML= e)
-  }
-  else{
-      document.getElementById('signup-error').innerHTML = "Passwords didn't match"
-  }
+      .catch((e) => document.getElementById('login-error').innerHTML = e)
   }
 
+    function showAuth() {
+    document.getElementById('todo-view').style.display = 'none'
+    document.getElementById('auth-view').style.display = 'block'
+    document.getElementById('login-username').value = ''
+    document.getElementById('login-password').value = ''
+    document.getElementById('login-error').innerText = ''
+  }
+    
      function showTodos(username) {
     document.getElementById('auth-view').style.display = 'none'
     document.getElementById('todo-view').style.display = 'block'
-    document.getElementById('show-username').innerHTML = username + "'s"
+    document.getElementById('username').innerHTML = username + "'s"
     document.getElementById('todos').innerText = ''
   document.getElementById('db-loading').style.display = 'block'
   document.getElementById('db-error').innerText = ''
 
-  userbase.openDatabase({ databaseName: 'todos', changeHandler })
+  userbase.openDatabase({ shareToken: 'shareToken', changeHandler })
     .catch((e) => document.getElementById('db-error').innerText = e)
   }
     
     function changeHandler(items) {
   document.getElementById('db-loading').style.display = 'none'
   const todosList = document.getElementById('todos')
-  
+  globalitems=items;
 
   if (items.length === 0) {
     todosList.innerText = 'Empty'
@@ -173,13 +182,30 @@
 }
     function logout(){
        userbase.signOut() 
-        alert("Signed out")
+       alert("Signed out")
+       showAuth()
+       document.getElementById('auth-view').style.display = 'block'
+
+    }
+
+    
+    function upload(e){
     }
     
+    
+    var today = new Date();
+  var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+    function setCookie(name, value)
+  {
+    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+  }
+
+    
   document.getElementById('todo-view').style.display = 'none'
-  document.getElementById('signup-form').addEventListener('submit', handleSignUp)
+  document.getElementById('auth-view').style.display = 'none'
+  document.getElementById('upload').addEventListener('click', upload)
+  document.getElementById('login-form').addEventListener('submit', handleLogin)
 </script>
            
     </body>
 </html>
-    

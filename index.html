@@ -46,6 +46,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -57,11 +60,24 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="login.html">
+                    <div class="menuopt" href="login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   <a class="menuopt"  href="login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>           
@@ -138,5 +154,12 @@
    </div>
         <br><hr><br>
         </div>
+              <script type="text/javascript">
+      userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+            function logout(){
+       userbase.signOut() 
+        alert("Signed out")
+    }
+        </script>
     </body>
 </html>

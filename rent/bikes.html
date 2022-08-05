@@ -6,9 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+        <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="../main.css">
     </head>
-    <body style="margin: 0px; background-image: url(../images/istockphoto-1007122208-612x612.jpg)">
+    <body id="bikeimg" style="margin: 0px; background-image: url(../images/cartoon-snail-loading-loading.gif)">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -46,6 +47,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="../login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="../bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -57,20 +61,34 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="../login.html">
+                    <div class="menuopt" href="../login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   <a class="menuopt"  href="../login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="../signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="content">
             <div class="optionstabs">
                    <div class="car">
                     <h3 class="carh3">KTM Duke</h3>
                        <hr>
-                       <div class=tabimg id="ktm"></div>
+                       <div class=tabimg id="ktm" onclick="Dukebook()"></div>
                        <p>
                        <b><br>Model: Duke 250
                        <br>Brand: KTM
@@ -87,7 +105,7 @@
                     <div class="car">
                         <h3 class="carh3">    Royal Enfield</h3>
                         <hr>
-                        <div class="tabimg" id="royalenfield">
+                        <div class="tabimg" id="royalenfield" onclick="Royalbook()">
                         </div>
                         <p><b>
                             <br> Model: Bullet classic 500
@@ -104,7 +122,7 @@
                     <div class="car">
                     <h3 class="carh3">  Bajaj Pulsar</h3>
                         <hr>
-                       <div class="tabimg" id="pulsarns"></div>
+                       <div class="tabimg" id="pulsarns" onclick="Pulsarbook()"></div>
                         <p><b>
                             <br>
                              Model: NS200<br>
@@ -125,7 +143,7 @@
                  <div class="car">
                     <h3 class="carh3">Honda CBR</h3>
                         <hr>
-                       <div class="tabimg" id="cbr"></div>
+                       <div class="tabimg" id="cbr" onclick="CBRbook()"></div>
                         <p><b>
                             <br>
                              Model: CBR 250R<br>
@@ -143,7 +161,7 @@
                 <div class="car">
                     <h3 class="carh3">Indian</h3>
                         <hr>
-                        <div class="tabimg" id="indian"></div>
+                        <div class="tabimg" id="indian" onclick="Indianbook()"></div>
                         <p><b>
                             <br>
                              Model: 2018-Indian-Chief-Classic<br>
@@ -162,7 +180,7 @@
                     <div class="car">
                     <h3 class="carh3">Yamaha R1</h3>
                         <hr>
-                        <div class="tabimg" id="r1"></div>
+                        <div class="tabimg" id="r1" onclick="R1book()"></div>
                         <p><b>
                             <br>
                              Brand: Yamaha
@@ -179,7 +197,78 @@
             </div>
            
             </div>
+        </div>
          <br><br><br><br><br><br><br><br><br><br><hr><br>
-        
+              <script type="text/javascript">
+               let globalitems
+               let tobook
+               let isloged=1
+               let isbooked=0
+              document.getElementById('content').style.display= 'none'
+              userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+              .then((session) => session.user ? userbase.openDatabase({ databaseName: 'todos' , changeHandler }) : notlogin())
+              .catch((e) => alert('ERROR: '+e))              
+            function logout(){
+       userbase.signOut()  
+        alert("Signed out")
+    }
+        function book(tobook){
+            if(isloged===0){
+                alert('Please Login First.')
+            return
+            }
+            for (let i=0; i < globalitems.length; ++i){
+                if(tobook===globalitems[i].item.todo){
+                    alert(tobook+ ' is already booked')
+                    return
+                }
+            }
+            userbase.insertItem({ databaseName: 'todos', item: { 'todo': tobook }})
+    alert(tobook + ' Booked!')
+     }
+                  
+                  function changeHandler(items){
+                      globalitems=items;
+                      document.getElementById('bikeimg').style.backgroundImage="url('../images/istockphoto-1007122208-612x612.jpg')"
+                      document.getElementById('content').style.display= 'block'
+                  }
+                  
+                  function notlogin(){
+                      isloged=0;
+                      document.getElementById('bikeimg').style.backgroundImage="url('../images/istockphoto-1007122208-612x612.jpg')"
+                      document.getElementById('content').style.display= 'block'
+        }          
+    
+                  function Dukebook(){
+    tobook = "KTM Duke"
+        book(tobook)
+                  }
+                  
+                  function Royalbook(){
+    tobook = "Royal Enfield"
+        book(tobook)
+                  }
+                  
+                  function Pulsarbook(){
+    tobook = "Bajaj Pulsar"
+        book(tobook)
+                  }
+                  
+                  function CBRbook(){
+    tobook = "Honda CBR"
+        book(tobook)
+                  }
+                  
+                  function Indianbook(){
+    tobook = "Indian"
+        book(tobooko)
+                  }
+                  
+                  function R1book(){
+    tobook = "Yamaha R1"
+        book(tobook)
+                  }
+                  
+        </script>
     </body>
 </html>

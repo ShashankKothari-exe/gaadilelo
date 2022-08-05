@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BookMyRide | Buy, sell and rent cars.</title>
         <meta name="description" content="Buy,sell and rent cars.">
+        <script type="text/javascript" src="https://sdk.userbase.com/2/userbase.js"></script>
         <link rel="stylesheet" href="../main.css">
     </head>
     
@@ -19,7 +20,7 @@
         <meta name="description" content="Buy,sell and rent cars.">
         <link rel="stylesheet" href="../main.css">
     </head>
-    <body style="margin: 0px; background-image: url(../images/cactback.jfif)">
+    <body id="taxiimg" style="margin: 0px; background-image: url(../images/cartoon-snail-loading-loading.gif)">
         <div class="backtotop"><a style="text-decoration: none;" href="#" ><h1 style="font-size: 44px;">↑</h1></a></div>
          <div class= "header1">
             <div class="headerscontents">
@@ -57,6 +58,9 @@
                        Book Now
                             <div class="sub-menu-1">
                                 <ul>
+                                    <a class="menuopt"  href="../login.html">
+                                    <li>BOOKINGS</li>
+                                    </a>
                                     <a class="menuopt" href="../bookings/taxi.html">
                                     <li>TAXI</li>
                                     </a>
@@ -68,20 +72,34 @@
                         </li>
                 </div>
             
-                    <div><a class="menuopt" href="../login.html">
+                    <div class="menuopt" href="../login.html">
                         <li>
                             <b><u>Login/Sign up</u></b>
+                            <div class="sub-menu-1">
+                                <ul>
+                                   <a class="menuopt"  href="../login.html">
+                                    <li>LOGIN</li>
+                                    </a>
+                                    <a class="menuopt" href="../signup.html">
+                                    <li>SIGNUP</li>
+                                    </a>
+                                    <a class="menuopt" onclick="logout()">
+                                    <li>SIGN/LOG OUT</li>
+                                    </a>
+                                </ul> 
+                        </div>
                         </li>
-                        </a></div>
+                        </div>
                 
             </div>
             </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div id="content">
             <div class="optionstabs">
                    <div class="car">
                     <h3 class="carh3">Auto</h3>
                        <hr>
-                       <div class="tabimg" id=auto></div>
+                       <div class="tabimg" id="auto" onclick="Autobook()"></div>
                        <hr>
                        <div style="backdrop-filter: blur(1px);border-radius: 20%;">
                       <p><b><br><br><br>Model: Auto Rikshaw
@@ -98,7 +116,7 @@
                     <div class="car">
                     <h3 class="carh3">Car Taxi</h3>
                         <hr>
-                        <div class="tabimg" id="cartaxi"></div><hr>
+                        <div class="tabimg" id="cartaxi" onclick="Cartaxibook()"></div><hr>
                         <div style="backdrop-filter: blur(1px);border-radius: 20%;">
                         <p><b>
                             <br><br><br>
@@ -118,7 +136,7 @@
                     <div class="car">
                     <h3 class="carh3">E-Rickshaw</h3>
                         <hr>
-                <div class="tabimg" id="erick">
+                <div class="tabimg" id="erick" onclick="Erickbook()">
                         </div><hr>
                         <div style="backdrop-filter: blur(1px);border-radius: 20%;">
                           <p><b>
@@ -133,7 +151,81 @@
                               </b></p></div>
                 </div>
         </div>
-        
+        </div>
          <br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br>
+                     <script type="text/javascript">
+               let globalitems
+               let tobook
+               let isloged=1
+               let isbooked=0
+               let mydatabase=getCookie("mydata")
+              document.getElementById('content').style.display= 'none'
+              userbase.init({ appId: '7f05972e-9fa4-4b70-baca-e671e3b54594' })
+              .then((session) => session.user ? userbase.openDatabase({ databaseName: "todos" , changeHandler }) : notlogin())
+              .catch((e) => alert('ERROR: '+e))              
+            function logout(){
+       userbase.signOut()  
+        alert("Signed out")
+    }
+        function book(tobook){
+            if(isloged===0){
+                alert('Please Login First.')
+            return
+            }
+            for (let i=0; i < globalitems.length; ++i){
+                if(tobook===globalitems[i].item.todo){
+                    alert(tobook+ ' is already booked')
+                    return
+                }
+            }
+            userbase.insertItem({ databaseName: "todos", item: { 'todo': tobook }})
+    alert(tobook + ' Booked!')
+     }
+                  
+                  function changeHandler(items){
+                      globalitems=items;
+                      document.getElementById('taxiimg').style.backgroundImage="url('.../images/cactback.jfif')"
+                      document.getElementById('content').style.display= 'block'
+                  }
+                  
+                  function notlogin(){
+                      isloged=0;
+                      document.getElementById('taxiimg').style.backgroundImage="url('../images/cactback.jfif')"
+                      document.getElementById('content').style.display= 'block'
+        }          
+    
+                  function Autobook(){
+    tobook = "Auto Rickshaw"
+        book(tobook)
+                  }
+                  
+                  function Cartaxibook(){
+    tobook = "Sedan Taxi"
+        book(tobook)
+                  }
+                  
+                  function Erickbook(){
+    tobook = "E-Rikshaw(Indian tesla)"
+        book(tobook)
+                  }
+                         
+  function getCookie(name) {
+    // Split cookie string and get all individual name=value pairs in an array
+    var cookieArr = document.cookie.split(";");
+    
+    // Loop through the array elements
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if(name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+  }
+                  
+        </script>
     </body>
 </html>
